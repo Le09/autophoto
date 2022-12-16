@@ -204,7 +204,7 @@ class DocumentPage:
             lambda match: captions.pop(0),
             s_img
         )
-        return "\n".join((s if "%-" in s else s.replace("%%!-", "") for s in s_img_capt.split()))
+        return "\n".join((s if "%-" in s else s.replace("%%!-", "") for s in s_img_capt.splitlines()))
 
 
 def is_image(filepath):
