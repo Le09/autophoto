@@ -9,7 +9,6 @@ import random
 import datetime
 import subprocess
 import argparse
-import itertools
 
 DEFAULT_TEMPLATE_FOLDER = './Latex'
 DEFAULT_TEMPLATE = 'Default'
@@ -120,11 +119,11 @@ class DocumentMain:
 
     @property
     def compiled_tex(self):
-        tex_pages = [r"    \input{" + page.page_tex() + "}" for page in self.pages]
+        tex_pages = [r"    \\input{" + page.page_tex() + "}" for page in self.pages]
         tex_code = "\n".join(tex_pages)
         compiled = re.sub(PYTEX_PAGES, tex_code, self.template_main.pytex)
         if self.cover:
-            tex_code = r"    \input{" + self.cover[-1].page_tex() + "}"
+            tex_code = r"    \\input{" + self.cover[-1].page_tex() + "}"
             compiled = re.sub(PYTEX_COV, tex_code, compiled)
         return compiled
 
@@ -385,7 +384,7 @@ def main(photo_folder, template_folder, filename):
     imgs_part, options_p = load_content(photo_folder, t_pages)
 
     pages = [DocumentPage(im_set, t_pages, i + 1, output_folder, options)
-             for i, im_set, options in itertools.izip(range(len(imgs_part)), imgs_part, options_p)]
+             for i, im_set, options in zip(range(len(imgs_part)), imgs_part, options_p)]
     [p.write_to_disk() for p in pages]
 
     cover_page = []
