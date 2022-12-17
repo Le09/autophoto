@@ -4,19 +4,25 @@
 
 \vspace*{\fill}
 \begin{figure}[!htb]
-  	
-	\begin{minipage}{.49\textwidth}	
-		\centering    	
-    	\includegraphics[width=8cm,height=9cm,keepaspectratio]{%!!16,9!!%}
-    \end{minipage}    	
-	\begin{minipage}{.49\textwidth}
-		\centering
-	    \includegraphics[width=8cm,height=4cm,keepaspectratio]{%!!16,9!!%}
-	    
-		\vspace{1cm}   	    
-	    
-	    \includegraphics[width=8cm,height=4cm,keepaspectratio]{%!!16,9!!%}
-	\end{minipage}
-    	
+    \begin{minipage}{.49\textwidth}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=8cm,height=9cm,keepaspectratio]{%!!16,9!!%}
+            %%!- \caption*{%--%}
+        \end{figure}
+    \end{minipage}
+    \begin{minipage}{.49\textwidth}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=8cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+            %%!- \caption*{%--%}
+        \end{figure}
+        \vspace{.1cm}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=8cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+            %%!- \caption*{%--%}
+        \end{figure}
+    \end{minipage}
 \end{figure}
 \vspace*{\fill}

@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{eso-pic}
 \usepackage[export]{adjustbox}
+\usepackage{float}
 
 
 \usepackage{caption}
