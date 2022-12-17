@@ -2,7 +2,6 @@
 
 import sys
 import os
-from PIL import Image
 from shutil import copy
 import re
 import random
@@ -156,7 +155,13 @@ class DocumentPage:
 
     def _image_name_simplified(self, im):
         basename = os.path.basename(im.filename)
-        return re.sub('[^a-zA-Z0-9\.]', '', basename)
+        simplified = re.sub('[^a-zA-Z0-9\.]', '', basename)
+        name, extension = os.path.splitext(simplified)
+        # Latex does not support webp or other image formats easily (gif, ...)
+        # convert will take care of it
+        if extension.lower() not in ["jpeg", "jpg"]:
+            simplified = ".".join([name, "jpg"])
+        return simplified
 
     def _image_path(self, im):
         return os.path.join(self.output_root, self.page_folder, self._image_name_simplified(im))
@@ -170,7 +175,10 @@ class DocumentPage:
     def write_to_disk(self):
         create_folder(self.page_folder, self.output_root)
         for im in self.im_set:
-            im.save(self._image_path(im))
+            # TODO: configure how and when to resize in command line arguments
+            # -strip -interlace Plane -gaussian-blur 0.05 -quality 75%
+            command = 'convert -resize 25% "' + im.filename + '" ' + self._image_path(im)
+            subprocess.check_call(command, shell=True)
         f = open(self._page_path(), 'w')
         f.write(self.compiled_tex)
         f.close()
@@ -209,11 +217,20 @@ class DocumentPage:
 
 def is_image(filepath):
     try:
-        return Image.open(filepath)
+        output = subprocess.check_output('identify "%s"' % filepath, shell=True)
+        identify = output.decode().replace(filepath, "").split()
+        size = [int(s) for s in identify[1].split("x")]
+        return Img(filepath, size)
     except Exception:
         if not os.path.isdir(filepath):
             print("Warning: " + filepath + " cannot be opened as an image.")
         return False
+
+
+class Img:
+    def __init__(self, filename, size):
+        self.filename = filename
+        self.size = size
 
 
 def is_horizontal(image):
