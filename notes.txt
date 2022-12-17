@@ -1,0 +1,61 @@
+How it works:
+
+Input: Folder 
+which (maybe) contains images
+
+The initial latex file only contains the default template.
+
+Output:
+We want to put these images inside selected templates, to create a photo album.
+
+Folder' 
+containing the modified latex files, where: 
+- main'.tex is a copy of main.tex with the additional template(s) (adding path_main_tex(template), using replace, addTemplate)
+- for each page (following a template) of images, we create a subfolder that has copied the selected image(s) (using createTemplateFolder(template), path_from_root(template)) 
+and we copy and modify the corresponding template (adding path_photo_tex(image), using replace)
+___
+Functions:
+
+isImage(file) opens the file if it is an image, returns False otherwise
+
+getDim(image) returns a tuple (width, height)
+
+isHorizontal(image) tests if width >= height 
+
+horizontal(Folder) returns the number h of strictly horizontal images
+
+load_templates(template_folder) (not in diagram) returns a list with the template name, and how many images of horizontal, vertical, or "doesn't matter" kind it accepts (h_holes etc)
+
+replace(input_path, output_path, pattern, sub_list) takes input_path, copies it in output_path, and replaces occurrences of pattern with elements in sub_list
+____
+
+Questions/Remarks:
+- main is only called on Folder
+- We only extract the images from Folder, not from its subfolders
+- We always have the photo album main.tex, which contains the default template template1 (template_1 in the diagram)
+which can take any image and put it alone in a page
+- h_holes: accepts horizontal and square images
+s_holes: accepts any image
+- For the moment, additional templates are added outside of the script
+- How to select which templates we use, in what order?
+	- Need to use h, v, s, 
+	find a way to combine with h_holes, v_holes, s_holes
+	(always use template1, or random, or manual, or use a function so that all templates are completely filled)
+- If our input folder = 4 horizontal images, and our templates = default (template1), 2 vertical images (template2), 1 horizontal image on top of 2 vertical images (template3)
+What should we return?
+Can we return a blank page? 
+Can we return 4 pages with template3?
+- Think about regular expressions to use replace
+- Write a template that works with any set of images
+- Is it ok to copy by hand additional templates in the right folder, or should it be done in command line?
+(e.g. if it's in home/sleeptodream)
+
+LATER:
+- What should happen if we call functions with wrong input? (exceptions)
+- What to return if no image in input folder?
+- How do we remove/replace/move a specific image?
+- How do we change the page order?
+- What if we want to call main on several folders?
+- Call main on subfolders of Folder?
+
+

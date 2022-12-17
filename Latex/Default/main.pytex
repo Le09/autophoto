@@ -1,0 +1,40 @@
+%%MAIN
+\title{Templates}
+\date{\today}
+
+\documentclass[16pt]{article}
+
+\usepackage{graphicx}
+\usepackage{eso-pic}
+\usepackage[export]{adjustbox}
+
+
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
+
+\usepackage[
+	paperheight=11.8cm,
+	paperwidth=21cm,
+	margin=.5cm,
+	includefoot,
+	footskip=.3cm
+	]{geometry}
+
+	
+%\usepackage{fontspec}
+%\setmainfont{Anonymous Pro}
+	
+\pagenumbering{gobble}
+
+\begin{document}
+
+\AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{background_cover}}
+%Photo album
+%%%cover%%%
+\newpage
+
+\AddToShipoutPictureBG{\includegraphics[width=\paperwidth,height=\paperheight]{background}}
+
+%%%pages%%%
+
+\end{document}

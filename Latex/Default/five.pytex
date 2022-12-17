@@ -1,0 +1,29 @@
+%%PAGE
+
+\newpage
+
+\vspace*{\fill}
+\begin{figure}[!htb]
+	\begin{minipage}{.32\textwidth}	
+		\centering
+    	\includegraphics[width=5cm,height=9cm,keepaspectratio]{%!!16,9!!%}
+    \end{minipage}    	
+	\begin{minipage}{.32\textwidth}	
+		\centering
+    	\includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+
+		\vspace{1cm}       	
+    	
+    	\includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+    \end{minipage}    	
+	\begin{minipage}{.32\textwidth}
+		\centering
+	    \includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+	    
+		\vspace{1cm}   	    
+	    
+	    \includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+	\end{minipage}
+    	
+\end{figure}
+\vspace*{\fill}

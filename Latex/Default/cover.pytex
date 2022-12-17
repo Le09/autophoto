@@ -1,0 +1,18 @@
+%%COVER
+
+\newpage
+
+\vspace*{\fill}
+\begin{figure}[!htb]
+	 	
+	\begin{minipage}{.49\textwidth}	
+		\centering
+    	\includegraphics[width=8cm,height=9cm,keepaspectratio]{%!!16,9!!%}
+    \end{minipage}    	
+	\begin{minipage}{.49\textwidth}
+		\centering
+	    \includegraphics[width=8cm,height=9cm,keepaspectratio]{%!!16,9!!%}
+	\end{minipage}
+    	
+\end{figure}
+\vspace*{\fill}
