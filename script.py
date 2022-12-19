@@ -390,12 +390,13 @@ def image_mosaic(images_partition, output_folder, vertical=True):
         inputfile = "'" + img.filename.replace("'", "'\\''") + "'"
         outputfile = os.path.join('./' + output_folder, 'mosaic', 'sq' + re.sub('[^a-zA-Z0-9\.]', '', os.path.basename(img.filename)))
         # subprocess.check_call('convert ' + img.filename + r" -set option:size '%[fx:min(w,h)]x%[fx:min(w,h)]' xc:none +swap -gravity center -composite " + outputfile, shell=True)
-        subprocess.check_call('convert ' + inputfile + r' -auto-orient -thumbnail 500x500^ -gravity center -extent 500x500 ' + outputfile, shell=True)
+        subprocess.check_call('convert ' + inputfile + r' -auto-orient -thumbnail 150x150^ -gravity center -extent 150x150 ' + outputfile, shell=True)
         all_squares.append(outputfile)
     outputfile = os.path.join('./' + output_folder, 'mosaic', 'sq_montage.jpg')
     l = len(all_images)
     tiles = str(next((m for m in range(7, 17) if m % l == 0), 9))
-    subprocess.check_call('montage -tile ' + tiles + " " + " ".join(all_squares) + " " + outputfile, shell=True)
+    cmd = 'montage -mode Concatenate -geometry +5+5 -tile %s ' % tiles
+    subprocess.check_call("%s %s %s" % (cmd, " ".join(all_squares), outputfile), shell=True)
     return is_image(outputfile)
 
 
