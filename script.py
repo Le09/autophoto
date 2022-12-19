@@ -174,10 +174,13 @@ class DocumentPage:
 
     def write_to_disk(self):
         create_folder(self.page_folder, self.output_root)
+        quality = "-quality 75%"  # TODO: configure with CLI option
+        args = [quality, "-auto-orient", "-strip"]
         for im in self.im_set:
             # TODO: configure how and when to resize in command line arguments
-            # -strip -interlace Plane -gaussian-blur 0.05 -quality 75%
-            command = 'convert -auto-orient -strip -resize 25% "' + im.filename + '" ' + self._image_path(im)
+            resize = im.resize_argument()
+            command_base = " ".join(["convert"] + args + [resize])
+            command = '%s "%s" %s' % (command_base, im.filename, self._image_path(im))
             subprocess.check_call(command, shell=True)
         f = open(self._page_path(), 'w')
         f.write(self.compiled_tex)
@@ -217,10 +220,9 @@ class DocumentPage:
 
 def is_image(filepath):
     try:
-        output = subprocess.check_output('identify "%s"' % filepath, shell=True)
-        identify = output.decode().replace(filepath, "").split()
-        size = [int(s) for s in identify[1].split("x")]
-        return Img(filepath, size)
+        output = subprocess.check_output('convert -auto-orient "%s" info:' % filepath, shell=True)
+        size = re.search(" \d+x\d+ ", output.decode()).group().split("x")
+        return Img(filepath, width=int(size[0]), height=int(size[1]))
     except Exception:
         if not os.path.isdir(filepath):
             print("Warning: " + filepath + " cannot be opened as an image.")
@@ -228,17 +230,30 @@ def is_image(filepath):
 
 
 class Img:
-    def __init__(self, filename, size):
+    def __init__(self, filename, width, height):
         self.filename = filename
-        self.size = size
+        self.width = width
+        self.height = height
+
+    def resize_argument(self):
+        # let's work with 1920x1080 as a base # TODO: configure with CLI option
+        w = self.width / 2000
+        h = self.height / 1000
+        q = max(w, h)
+        r = ""
+        if q > .5:
+            r = "-resize 50%"
+        if q > 1:
+            r = "-resize 2000x"
+        return r
 
 
 def is_horizontal(image):
-    return image.size[0] >= image.size[1]
+    return image.width >= image.height
 
 
 def is_vertical(image):
-    return image.size[0] <= image.size[1]
+    return image.width <= image.height
 
 
 def image_orientations(im_set):
