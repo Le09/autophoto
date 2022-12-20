@@ -198,7 +198,10 @@ class DocumentPage:
         if name:
             template = next(t for t in page_templates if t.name == name)
         else:
-            possible_pages = [p for p in page_templates if sets_compatible(image_orientations(im_set), p.photos_in_page())]
+            orientations = image_orientations(im_set)
+            possible_pages = [p for p in page_templates if sets_compatible(orientations, p.photos_in_page())]
+            if not possible_pages:
+                possible_pages = [p for p in page_templates if sets_compatible(orientations, p.photos_in_page(), lax=True)]
             # assert(len(possible_pages)>0)
             template = random.choice(possible_pages)
         return template
