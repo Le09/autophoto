@@ -187,7 +187,7 @@ class DocumentPage:
             # TODO: configure how and when to resize in command line arguments
             resize = im.resize_argument()
             command_base = " ".join(["convert"] + args + [resize])
-            command = '%s "%s" %s' % (command_base, im.filename, self._image_path(im))
+            command = "%s %s %s" % (command_base, shellify_filepath(im.filename), self._image_path(im))
             subprocess.check_call(command, shell=True)
         f = open(self._page_path(), 'w')
         f.write(self.compiled_tex)
@@ -228,9 +228,17 @@ class DocumentPage:
         return "\n".join((s if "%-" in s else s.replace("%%!-", "") for s in s_img_capt.splitlines()))
 
 
+def shellify_filepath(filepath):
+    result = filepath.replace("\\", "\\\\")
+    for char in " !()'":
+        result = result.replace(char, "\\" + char)
+    return result
+
+
 def is_image(filepath):
     try:
-        output = subprocess.check_output('convert -auto-orient "%s" info:' % filepath, shell=True)
+        command = f'convert -auto-orient {shellify_filepath(filepath)} info:'
+        output = subprocess.check_output(command, shell=True)
         size = re.search(" \d+x\d+ ", output.decode()).group().split("x")
         return Img(filepath, width=int(size[0]), height=int(size[1]))
     except Exception:
