@@ -25,6 +25,13 @@ PYTEX_COV = '(%%%cover%%%)'
 
 PYTEX_COVER = {'name': 'cover.pytex', 'marker': PYTEX_ISCOVER}
 
+
+def orientation(x, y):
+    # this drives how much we allow a vertical to be used in a square or the opposite
+    tolerance = .2  # TODO: make tolerance configurable
+    return (abs(x / y - 1) < tolerance and 'a') or (x > y and 'h') or 'v'
+
+
 class Template:
     def __init__(self, name, pytex):
         self.name = name
@@ -83,7 +90,7 @@ class TemplatePage(Template):
         for match in matches:
             try:
                 x, y = [int(m) for m in match[3: -3].split(',')]
-                result.append(x == y and 'a' or x > y and 'h' or 'v')
+                result.append(orientation(x, y))
             except:  # we cannot parse the dimension info; in that case let's go for 'any'
                 result.append('a')
         return result
@@ -257,8 +264,7 @@ def is_vertical(image):
 
 
 def image_orientations(im_set):
-    return [is_horizontal(im) and is_vertical(im) and 'a'
-            or is_horizontal(im) and 'h' or 'v' for im in im_set]
+    return [orientation(im.width, im.height) for im in im_set]
 
 
 # FOLDER
@@ -349,22 +355,32 @@ def segment(im_list, page_templates):
     partition = []
     while im_list:
         possible_sizes = all_sizes[:]
-        i = random.choice(possible_sizes)
-        possible_sizes.remove(i)
-        while not sets_compatible(image_orientations(im_list[:len(i)]), i) : #TODO compatible
+        compatible = False
+        while possible_sizes and not compatible:
             i = random.choice(possible_sizes)
             possible_sizes.remove(i)
+            compatible = sets_compatible(image_orientations(im_list[:len(i)]), i)
+        if not compatible:
+            possible_sizes = all_sizes[:]
+            while possible_sizes and not compatible:
+                i = random.choice(possible_sizes)
+                possible_sizes.remove(i)
+                orientations = image_orientations(im_list[:len(i)])
+                compatible = sets_compatible(orientations, i, lax=True)
         new_set, im_list = im_list[:len(i)], im_list[len(i):]
         partition.append(new_set)
     return partition
 
 
-def sets_compatible(im_set, template_set):
-    # TODO
-    # return len(im_set) == len(template_set) and (
-    #         im_set.count('h') <= template_set.count('h') + template_set.count('a')
-    #         and im_set.count('v') <= template_set.count('v') + template_set.count('a'))
-    return len(im_set) == len(template_set)
+def sets_compatible(im_set, template_set, lax=False):
+    compatible = len(im_set) == len(template_set)
+    if compatible and not lax:
+        t_as = template_set.count('a')
+        compatible = (
+            im_set.count('h') <= template_set.count('h') + t_as
+        and im_set.count('v') <= template_set.count('v') + t_as
+        )
+    return compatible
 
 
 def in_to_out_folder(photo_folder):
