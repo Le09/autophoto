@@ -310,7 +310,7 @@ def parse_options_file(name):
 
 
 def load_content(root_folder, page_templates):
-    max_size = max(len(t.photos_in_page()) for t in page_templates)
+    sizes = [len(t.photos_in_page()) for t in page_templates]
     list_content = []
     page_options = []
     for folder in sorted(f for f in os.listdir(root_folder) if os.path.isdir(os.path.join(root_folder, f))):
@@ -321,8 +321,19 @@ def load_content(root_folder, page_templates):
             content = is_image(file_path)
             if content:
                 im_list.append(content)
-
-        if len(im_list) > max_size or options.get('resegment'):
+        len_imgs = len(im_list)
+        len_template = len(get_photos_from_name(options.get('template'), page_templates))
+        if len_template and len(im_list) > len_template:
+            for i in range(0, len(im_list), len_template):
+                sublist = im_list[i:i + len_template]
+                if len(sublist) == len_template:
+                    list_content.append(sublist)
+                    page_options.append(options)
+                else:  # do not force the wrong template!
+                    list_content += segment(im_list, page_templates)
+        elif len_imgs < len_template:  # ignore the template, it's wrong
+            list_content += segment(im_list, page_templates)
+        elif len_imgs not in sizes or options.get('resegment'):
             segmented = segment(im_list, page_templates)
             list_content += segmented
             page_options += [options] * len(segmented)
@@ -331,6 +342,11 @@ def load_content(root_folder, page_templates):
             page_options.append(options)
 
     return list_content, page_options
+
+
+def get_photos_from_name(name, page_templates):
+    template = next((t for t in page_templates if t.name == name), None)
+    return template.photos_in_page() if template else []
 
 
 def create_folder(name, destination):
