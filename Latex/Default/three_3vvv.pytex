@@ -1,0 +1,31 @@
+%%PAGE
+
+%\newpage
+
+%\begin{slide}% vertically center
+\small
+\begin{center}
+\begin{tikzpicture}
+%
+\node[fill=white](p1) at (0,0)% for absolute cordinates, if any
+ {\resizebox{.25\textwidth}{!}{\includegraphics[keepaspectratio]{%!!9,16!!%}}};
+%%!-\node[above=.01\textheight,text=black] at (p1.north) {%--%};
+%
+\node[right, fill=white](p2) at ($(p1.east)+(.03\textheight,.06\textheight)$)
+ {\resizebox{.25\textwidth}{!}{\includegraphics[keepaspectratio]{%!!9,16!!%}}};
+%%!-\node[below=.01\textheight,text=black] at (p2.south) {%--%};
+% ditto
+\node[right,fill=white](p3) at ($(p2.east)+(.03\textheight,.06\textheight)$)
+ {\resizebox{.25\textwidth}{!}{\includegraphics[keepaspectratio]{%!!9,16!!%}}};
+%%!-\node[below=.01\textheight,text=black] at (p3.south) {%--%};
+%
+\end{tikzpicture}
+\end{center}
+%\end{slide}
+
+%\node[fill=Gold](p1) at (0,0)% for absolute cordinates, if any
+% {\resizebox{2in}{!}{\includegraphics{Photos/Vertical/20170521_141908.jpg}}};
+%\node[above=2mm,fill=red,text=white] at (p1.north) {caption};
+%fill=Navy
+%fill=Silver
+%\node[rotate=90,below=2mm,fill=white,text=black] at (p3.east) {sideways};

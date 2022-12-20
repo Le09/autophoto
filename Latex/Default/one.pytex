@@ -3,9 +3,9 @@
 \newpage
 \vspace*{\fill}
 \noindent
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \adjustbox{fbox=0pt,bgcolor=white}{\includegraphics[width=20cm,height=10cm,keepaspectratio]{%!!16,9!!%}}
+    \adjustbox{fbox=0pt,bgcolor=white}{\includegraphics[width=16cm,height=8cm,keepaspectratio]{%!!16,16!!%}}
     %%!- \caption*{%--%}
 \end{figure}
 \vspace*{\fill}

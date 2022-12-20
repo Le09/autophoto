@@ -2,22 +2,20 @@
 \newpage
 
 \vspace*{\fill}
-\begin{figure}[!htb]
-    \begin{minipage}{.49\textwidth}
+    \begin{minipage}{.48\textwidth}
         \begin{figure}[H]
             \begin{center}
-                \includegraphics[width=8cm,height=9cm,keepaspectratio]{%!!16,9!!%}
+                \ffbox{\includegraphics[width=\textwidth,height=.8\textheight,keepaspectratio]{%!!9,16!!%}}
                 %%!- \caption*{%--%}
             \end{center}
         \end{figure}
     \end{minipage}
-    \begin{minipage}{.49\textwidth}
+    \begin{minipage}{.48\textwidth}
         \begin{figure}[H]
             \begin{center}
-                \includegraphics[width=8cm,height=9cm,keepaspectratio]{%!!16,9!!%}
+                \ffbox{\includegraphics[width=\textwidth,height=.8\textheight,keepaspectratio]{%!!9,16!!%}}
                 %%!- \caption*{%--%}
             \end{center}
         \end{figure}
     \end{minipage}
-\end{figure}
 \vspace*{\fill}

@@ -1,0 +1,24 @@
+%%PAGE
+
+%\newpage
+
+%\begin{slide}% vertically center
+%\small
+\begin{center}
+\begin{tikzpicture}
+%
+\node[fill=white](p1) at (.05\textwidth,.05\textwidth)% for absolute cordinates, if any
+ {\resizebox{.3\textwidth}{!}{\includegraphics[keepaspectratio]{%!!16,9!!%}}};
+%%!-\node[below=.01\textheight,text=black] at (p1.south) {%--%};
+%
+\node[right,fill=white](p2) at ($(p1.east)+(.2\textheight,0in)$)
+ {{\resizebox{.3\textwidth}{!}{\includegraphics[keepaspectratio]{%!!16,9!!%}}}};
+%%!-\node[below=.01\textheight,text=black] at (p2.south) {%--%};
+%
+\node[right,fill=white](p3) at ($(p1.west)+(.4\textheight,-.5\textheight)$)
+ {{\resizebox{.3\textwidth}{!}{\includegraphics[keepaspectratio]{%!!16,9!!%}}}};
+%%!-\node[rotate=90,below=.01\textheight,text=black] at (p3.east) {%--%};
+%
+\end{tikzpicture}
+\end{center}
+%\end{slide}

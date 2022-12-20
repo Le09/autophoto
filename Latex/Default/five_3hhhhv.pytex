@@ -1,47 +1,40 @@
 %%PAGE
-
 \newpage
 
 \vspace*{\fill}
-\begin{figure}[!htb]
+%\begin{figure}[!htb]
     \begin{minipage}{.32\textwidth}
         \begin{figure}[H]
             \centering
-            \includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+            \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
             %%!- \caption*{%--%}
         \end{figure}
-        \vspace{.1cm}
+        \vspace{.001\textheight}
         \begin{figure}[H]
             \centering
-            \includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+            \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
             %%!- \caption*{%--%}
         \end{figure}
     \end{minipage}
     \begin{minipage}{.32\textwidth}
         \begin{figure}[H]
             \centering
-            \includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+            \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
             %%!- \caption*{%--%}
         \end{figure}
-        \vspace{.1cm}
+        \vspace{.001\textheight}
         \begin{figure}[H]
             \centering
-            \includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+            \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
             %%!- \caption*{%--%}
         \end{figure}
     \end{minipage}
     \begin{minipage}{.32\textwidth}
         \begin{figure}[H]
             \centering
-            \includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
-            %%!- \caption*{%--%}
-        \end{figure}
-        \vspace{.1cm}
-        \begin{figure}[H]
-            \centering
-            \includegraphics[width=5cm,height=4cm,keepaspectratio]{%!!16,9!!%}
+            \ffbox{\includegraphics[width=.8\textwidth,height=.3\textheight,keepaspectratio]{%!!9,16!!%}}
             %%!- \caption*{%--%}
         \end{figure}
     \end{minipage}
-\end{figure}
+%\end{figure}
 \vspace*{\fill}
