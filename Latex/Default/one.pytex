@@ -1,9 +1,10 @@
 %%PAGE
 
-\newpage
-\noindent
-\begin{figure}[H]
-    \centering
-    \adjustbox{fbox=0pt,bgcolor=white}{\includegraphics[max height=.85\textheight,max width=.9\textwidth,keepaspectratio]{%!!16,16!!%}}
-    %%!- \caption*{%--%}
-\end{figure}
+\begin{center}
+\begin{tikzpicture}
+%
+\node[fill=white](p1) at (0,0)% for absolute cordinates, if any
+ {\includegraphics[max width=\textwidth,max height=.9\textheight,keepaspectratio]{%!!16,16!!%}};
+%%!-\node[below=.01\textheight,text=black,align=center] at (p1.south) {%--%};
+\end{tikzpicture}
+\end{center}

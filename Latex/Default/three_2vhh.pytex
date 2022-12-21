@@ -2,25 +2,20 @@
 
 \newpage
 
-\vspace*{\fill}
-    \begin{minipage}{.48\textwidth}
-        \begin{figure}[H]
-            \centering
-            \ffbox{\includegraphics[width=.8\textwidth,height=.8\textheight,keepaspectratio]{%!!9,16!!%}}
-            %%!- \caption*{%--%}
-        \end{figure}
-    \end{minipage}
-    \begin{minipage}{.48\textwidth}
-        \begin{figure}[H]
-            \centering
-            \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
-            %%!- \caption*{%--%}
-        \end{figure}
-        \vspace{.001\textheight}
-        \begin{figure}[H]
-            \centering
-            \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
-            %%!- \caption*{%--%}
-        \end{figure}
-    \end{minipage}
-\vspace*{\fill}
+\begin{center}
+\begin{tikzpicture}
+%
+\node[fill=white](p1) at (0,0)% for absolute cordinates, if any
+ {\includegraphics[max width=.45\textwidth,max height=.85\textheight,keepaspectratio]{%!!9,16!!%}};
+%%!-\node[above=.01\textheight,text=black,align=center] at (p1.north) {%--%};
+%
+\node[above right, fill=white](p2) at ($(p1.east)+(.01\textwidth,0)$)
+ {\includegraphics[max width=.45\textwidth,max height=.42\textheight,keepaspectratio]{%!!16,9!!%}};
+%%!-\node[above=.01\textheight,text=black,align=center] at (p2.north) {%--%};
+%
+\node[below,fill=white](p3) at ($(p2.south)+(0,-.01\textheight)$)
+{\includegraphics[max width=.45\textwidth,max height=.42\textheight,keepaspectratio]{%!!16,9!!%}};
+%%!-\node[below=.01\textheight,text=black,align=center] at (p3.south) {%--%};
+%
+\end{tikzpicture}
+\end{center}

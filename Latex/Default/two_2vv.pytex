@@ -5,7 +5,7 @@
     \begin{minipage}{.48\textwidth}
         \begin{figure}[H]
             \begin{center}
-                \ffbox{\includegraphics[width=.9\textwidth,height=.85\textheight,keepaspectratio]{%!!9,16!!%}}
+                \ffbox{\includegraphics[max width=.9\textwidth,max height=.85\textheight,keepaspectratio]{%!!9,16!!%}}
                 %%!- \caption*{%--%}
             \end{center}
         \end{figure}
