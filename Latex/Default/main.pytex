@@ -28,8 +28,10 @@
 	footskip=.3cm
 	]{geometry}
 
-\usepackage{antpolt}
-\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\setmainfont{Eczar-Medium.otf}[BoldFont=Eczar-Bold.otf]
+%\usepackage{antpolt}
+%\usepackage[T1]{fontenc}
 %\usepackage{fontspec}
 %\setmainfont{Anonymous Pro}
 
