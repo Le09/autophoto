@@ -196,7 +196,9 @@ class DocumentPage:
     def select_page_template(self, im_set, page_templates):
         name = self.options.get("template")
         if name:
-            template = next(t for t in page_templates if t.name == name)
+            template = next((t for t in page_templates if t.name == name), None)
+            if not template:
+                raise Exception(f"Template not found: {name}")
         else:
             orientations = image_orientations(im_set)
             possible_pages = [p for p in page_templates if sets_compatible(orientations, p.photos_in_page())]
@@ -504,5 +506,5 @@ if __name__ == "__main__":
     try:
         main(args.folder, template_folder, args.name)
     except Exception as e:
-        print(e.message)
+        print(e)
         sys.exit(1)
