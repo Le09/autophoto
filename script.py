@@ -323,7 +323,7 @@ def parse_options_file(name):
 
 
 def load_content(root_folder, page_templates):
-    sizes = [len(t.photos_in_page()) for t in page_templates]
+    sizes = [t.photos_in_page() for t in page_templates]
     list_content = []
     page_options = []
     for folder in sorted(f for f in os.listdir(root_folder) if os.path.isdir(os.path.join(root_folder, f))):
@@ -346,7 +346,7 @@ def load_content(root_folder, page_templates):
                     list_content += segment(im_list, page_templates)
         elif len_imgs < len_template:  # ignore the template, it's wrong
             list_content += segment(im_list, page_templates)
-        elif len_imgs not in sizes or options.get('resegment'):
+        elif not any(sets_compatible(image_orientations(im_list), size) for size in sizes) or options.get('resegment'):
             segmented = segment(im_list, page_templates)
             list_content += segmented
             page_options += [options] * len(segmented)
