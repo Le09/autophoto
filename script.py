@@ -475,7 +475,7 @@ def main(photo_folder, template_folder, filename):
     main.write_to_disk()
 
     os.chdir(output_folder)
-    subprocess.check_call(['pdflatex', OUTPUT_MAIN_NAME])
+    subprocess.check_call(['xelatex', OUTPUT_MAIN_NAME])
     if filename:
         subprocess.check_call(['mv', 'main.pdf', filename])
 
