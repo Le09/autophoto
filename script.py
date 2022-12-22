@@ -9,6 +9,8 @@ import datetime
 import subprocess
 import argparse
 
+WARNINGS = []
+
 DEFAULT_TEMPLATE_FOLDER = './Latex'
 DEFAULT_TEMPLATE = 'Default'
 DEFAULT_MAIN_NAME = 'main.pytex'
@@ -258,8 +260,13 @@ class DocumentPage:
             orientations = image_orientations(im_set)
             possible_pages = [p for p in page_templates if p.random and sets_compatible(orientations, p.photos_in_page())]
             if not possible_pages:
+                WARNINGS.append(f"Warning: using lax mode for the following images: {[im.filename for im in im_set]}")
                 possible_pages = [p for p in page_templates if p.random and sets_compatible(orientations, p.photos_in_page(), lax=True)]
             template = random.choice(possible_pages)
+        if len(template.photos_in_page()) != len(im_set):
+            WARNINGS.append(f"Warning: inconsistent number of images in "
+                            f"template {template.name}, with {len(template.photos_in_page())} slots"
+                            f"for images {[im.filename for im in im_set]}")
         return template
 
     def pytex_to_tex(self):
@@ -531,6 +538,7 @@ def main(photo_folder, template_folder, filename):
     subprocess.check_call(['xelatex', OUTPUT_MAIN_NAME])
     if filename:
         subprocess.check_call(['mv', 'main.pdf', filename])
+    return output_folder
 
 
 def main_arguments_parser():
@@ -550,12 +558,25 @@ def main_arguments_parser():
     return parser
 
 
+def print_report(output_folder, warnings):
+    print("\n\n\n")
+    print(f"Output folder: {output_folder}")
+    if warnings:
+        print("\n\n\n***********************************************************")
+        print()
+        for warning in warnings:
+            print(warning)
+        print()
+        print("***********************************************************")
+
+
 if __name__ == "__main__":
     import pudb; pudb.set_trace()
     args = main_arguments_parser().parse_args()
     template_folder = os.path.join(args.template_folder, args.template)
     try:
-        main(args.folder, template_folder, args.name)
+        output_folder = main(args.folder, template_folder, args.name)
+        print_report(output_folder, WARNINGS)
     except Exception as e:
         print(e)
         sys.exit(1)
