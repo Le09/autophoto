@@ -407,7 +407,9 @@ def load_content(root_folder, page_templates):
                     list_content.append(sublist)
                     page_options.append(options)
                 else:  # do not force the wrong template!
-                    list_content += segment(im_list, page_templates)
+                    segmented = segment(sublist, page_templates)
+                    list_content += segmented
+                    page_options += [{}] * len(segmented)
         elif len_imgs < len_template:  # ignore the template, it's wrong
             list_content += segment(im_list, page_templates)
         elif not any(sets_compatible(image_orientations(im_list), size) for size in sizes) or options.get('resegment'):
