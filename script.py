@@ -33,6 +33,54 @@ def orientation(x, y):
     return (abs(x / y - 1) < tolerance and 'a') or (x > y and 'h') or 'v'
 
 
+def opposite(orientation):
+    return "v" if orientation == "h" else "h" if orientation == "v" else "a"
+
+
+def weights(template_photos, im_orientations):
+    return {k: -im_orientations.count(k) + template_photos.count(k) for k in "hva"}
+
+
+def weight(template_orientation, weights, im_o):
+    weight = 0
+    if template_orientation != im_o:
+        if template_orientation == "a":
+            weight = weights[im_o]
+        else:
+            if im_o != "a":
+                weight = 1000 #if im_o != "a" else 1
+            else:
+                weight = 1 if weights[opposite(template_orientation)] > 0 else 0
+    return weight
+
+
+def orientation_reorder(target, im_os, im_set):
+    """ Given the orientations of the template, reorder images to fit.
+    The signature is adapted to be more easily testable.
+    >>> orientation_reorder(["v", "h", "h"], ["h", "v", "h"], [0, 0, 0])[1]
+    ['v', 'h', 'h']
+    >>> orientation_reorder(["v", "h", "h"], ["a", "a", "v"], [0, 0, 0])[1]
+    ['v', 'a', 'a']
+    >>> orientation_reorder(["v", "h", "h"], ["a", "a", "h"], [0, 0, 0])[1]
+    ['a', 'a', 'h']
+    >>> orientation_reorder(["v", "h", "h"], ["v", "h", "h"], [0, 0, 0])[1]
+    ['v', 'h', 'h']
+    >>> orientation_reorder(["a", "a", "a"], ["v", "h", "a"], [0, 0, 0])[1]
+    ['v', 'h', 'a']
+    """
+    new_order = []
+    new_orientations = []
+    for i in range(len(target)):
+        target_o = target[i]
+        target_tail = target[i + 1:]
+        weights_tail = weights(target_tail, im_os)
+        get_weight = lambda tu: weight(target_o, weights_tail, tu[1])
+        index_min = min(enumerate(im_os), key=get_weight)[0]
+        new_orientations.append(im_os.pop(index_min))
+        new_order.append(im_set.pop(index_min))
+    return new_order, new_orientations
+
+
 class Template:
     def __init__(self, name, pytex):
         self.name = name
@@ -212,7 +260,11 @@ class DocumentPage:
     def pytex_to_tex(self):
         image_paths = []
         captions = []
-        for im in self.im_set:
+
+        target = self.page_template.photos_in_page()
+        im_os = image_orientations(self.im_set)
+        ordered_im_set = orientation_reorder(target, im_os, self.im_set[:])[0]
+        for im in ordered_im_set:
             basename = self._image_name_simplified(im)
             filepath = os.path.join(self.page_folder, basename)
             options = parse_options_file(os.path.splitext(os.path.basename(im.filename))[0])
@@ -268,17 +320,13 @@ class Img:
             r = "-resize 2000x"
         return r
 
-
-def is_horizontal(image):
-    return image.width >= image.height
-
-
-def is_vertical(image):
-    return image.width <= image.height
+    @property
+    def orientation(self):
+        return orientation(self.width, self.height)
 
 
 def image_orientations(im_set):
-    return [orientation(im.width, im.height) for im in im_set]
+    return [im.orientation for im in im_set]
 
 
 # FOLDER
