@@ -15,6 +15,7 @@ DEFAULT_MAIN_NAME = 'main.pytex'
 OUTPUT_MAIN_NAME = 'main.tex'
 
 PYTEX_ISPAGE = '(%%PAGE)'
+PYTEX_NORANDOM = '(%%NORANDOM)'
 PYTEX_ISMAIN = '(%%MAIN)'
 PYTEX_ISCOVER = '(%%COVER)'
 PYTEX_BLANK = '(%!!.*!!%)'
@@ -36,6 +37,7 @@ class Template:
     def __init__(self, name, pytex):
         self.name = name
         self.pytex = pytex
+        self.random = not re.search(PYTEX_NORANDOM, pytex)
 
     @staticmethod
     def is_pytex_template(pattern, filepath):
@@ -201,10 +203,9 @@ class DocumentPage:
                 raise Exception(f"Template not found: {name}")
         else:
             orientations = image_orientations(im_set)
-            possible_pages = [p for p in page_templates if sets_compatible(orientations, p.photos_in_page())]
+            possible_pages = [p for p in page_templates if p.random and sets_compatible(orientations, p.photos_in_page())]
             if not possible_pages:
-                possible_pages = [p for p in page_templates if sets_compatible(orientations, p.photos_in_page(), lax=True)]
-            # assert(len(possible_pages)>0)
+                possible_pages = [p for p in page_templates if p.random and sets_compatible(orientations, p.photos_in_page(), lax=True)]
             template = random.choice(possible_pages)
         return template
 
