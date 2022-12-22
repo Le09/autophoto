@@ -104,6 +104,10 @@ class Template:
 
 
 class TemplatePage(Template):
+    def __init__(self, *args, **kwargs):
+        super(TemplatePage, self).__init__(*args, **kwargs)
+        self.photos_memos = None
+
     @staticmethod
     def is_page_template(filepath):
         name_content = Template.is_pytex_template(PYTEX_ISPAGE, filepath)
@@ -134,16 +138,17 @@ class TemplatePage(Template):
         return TemplatePage(name_content[0], name_content[1])
 
     def photos_in_page(self):
-        # (h, v, any)
-        matches = re.findall(PYTEX_BLANK, self.pytex)
-        result = []
-        for match in matches:
-            try:
-                x, y = [int(m) for m in match[3: -3].split(',')]
-                result.append(orientation(x, y))
-            except:  # we cannot parse the dimension info; in that case let's go for 'any'
-                result.append('a')
-        return result
+        if not self.photos_memos:
+            matches = re.findall(PYTEX_BLANK, self.pytex)
+            result = []
+            for match in matches:
+                try:
+                    x, y = [int(m) for m in match[3: -3].split(',')]
+                    result.append(orientation(x, y))
+                except:  # we cannot parse the dimension info; in that case let's go for 'any'
+                    result.append('a')
+            self.photos_memos = result
+        return  self.photos_memos
 
 
 class TemplateMain(Template):
@@ -307,6 +312,7 @@ class Img:
         self.filename = filename
         self.width = width
         self.height = height
+        self.orientation_memo = None
 
     def resize_argument(self):
         # let's work with 1920x1080 as a base # TODO: configure with CLI option
@@ -322,7 +328,9 @@ class Img:
 
     @property
     def orientation(self):
-        return orientation(self.width, self.height)
+        if not self.orientation_memo:
+            self.orientation_memo = orientation(self.width, self.height)
+        return self.orientation_memo
 
 
 def image_orientations(im_set):
