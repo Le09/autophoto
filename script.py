@@ -483,7 +483,6 @@ def image_mosaic(images_partition, output_folder, vertical=True):
     for img in all_images:
         inputfile = "'" + img.filename.replace("'", "'\\''") + "'"
         outputfile = os.path.join('./' + output_folder, 'mosaic', 'sq' + re.sub('[^a-zA-Z0-9\.]', '', os.path.basename(img.filename)))
-        # subprocess.check_call('convert ' + img.filename + r" -set option:size '%[fx:min(w,h)]x%[fx:min(w,h)]' xc:none +swap -gravity center -composite " + outputfile, shell=True)
         subprocess.check_call('convert ' + inputfile + r' -auto-orient -thumbnail 150x150^ -gravity center -extent 150x150 ' + outputfile, shell=True)
         all_squares.append(outputfile)
     outputfile = os.path.join('./' + output_folder, 'mosaic', 'sq_montage.jpg')
@@ -495,13 +494,6 @@ def image_mosaic(images_partition, output_folder, vertical=True):
 
 
 def main(photo_folder, template_folder, filename):
-    """TODO Template:
-         - change font
-         - caption (remove Figure:)
-         - white border around images? (better way than adjust box?)
-         - make cover (+ one special template for text? e.g. one picture + some thoughts, ...)
-    """
-
     output_folder = in_to_out_folder(photo_folder)
     create_folder(output_folder, ".")
 
