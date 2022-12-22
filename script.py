@@ -477,9 +477,11 @@ def in_to_out_folder(photo_folder):
 
 
 def cover_get_images(from_folder, images_partition, output_folder):
-    """TODO"""
-    x = next(os.walk(from_folder))
-    cover_img = is_image(os.path.join(x[0], x[2][0]))
+    try:
+        get_image = lambda x: is_image(os.path.join(x[0], x[2][0]))
+        cover_img = next((get_image(x) for x in os.walk(from_folder)))
+    except Exception:
+        raise Exception(f"Your folder {from_folder} should contain a cover image.")
     vignettes = image_mosaic(images_partition, output_folder, vertical=True)
     return [cover_img, vignettes]
 
