@@ -500,11 +500,12 @@ def image_mosaic(images_partition, output_folder, vertical=True):
     all_squares = []
     subprocess.check_call(['mkdir', os.path.join(output_folder, 'mosaic')])
     for img in all_images:
-        inputfile = "'" + img.filename.replace("'", "'\\''") + "'"
-        outputfile = os.path.join('./' + output_folder, 'mosaic', 'sq' + re.sub('[^a-zA-Z0-9\.]', '', os.path.basename(img.filename)))
-        subprocess.check_call('convert ' + inputfile + r' -auto-orient -thumbnail 150x150^ -gravity center -extent 150x150 ' + outputfile, shell=True)
+        inputfile = shellify_filepath(img.filename)
+        outputfile = os.path.join(output_folder, 'mosaic', 'sq' + re.sub('[^a-zA-Z0-9\.]', '', os.path.basename(img.filename)))
+        command = 'convert ' + inputfile + r' -auto-orient -thumbnail 150x150^ -gravity center -extent 150x150 ' + outputfile
+        subprocess.check_call(command, shell=True)
         all_squares.append(outputfile)
-    outputfile = os.path.join('./' + output_folder, 'mosaic', 'sq_montage.jpg')
+    outputfile = os.path.join(output_folder, 'mosaic', 'sq_montage.jpg')
     l = len(all_images)
     tiles = str(next((m for m in range(7, 17) if m % l == 0), 9))
     cmd = 'montage -mode Concatenate -geometry +5+5 -tile %s ' % tiles
