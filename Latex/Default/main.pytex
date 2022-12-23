@@ -9,16 +9,11 @@
 \usepackage[export]{adjustbox}
 \usepackage{float}
 
-
 \usepackage{caption}
 \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
+
 \usepackage{tikz}
 \usetikzlibrary{calc}
-%\usepackage[screen,nopanel]{pdfscreen}
-%
-%\margins{.5in}{.5in}{.5in}{.5in}
-%\screensize{9in}{16in}
-
 
 \usepackage[
 	paperheight=11.8cm,
@@ -30,13 +25,6 @@
 
 \usepackage{fontspec}
 \setmainfont{Eczar-Medium.otf}[BoldFont=Eczar-Bold.otf]
-%\usepackage{antpolt}
-%\usepackage[T1]{fontenc}
-%\usepackage{fontspec}
-%\setmainfont{Anonymous Pro}
-
-%\fboxsep=10mm%padding thickness
-%\fboxrule=4pt%border thickness
 
 \newcommand{\ffbox}[1]{\fcolorbox{white}{white}{#1}}
 

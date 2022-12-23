@@ -2,8 +2,6 @@
 
 %\newpage
 
-%\begin{slide}% vertically center
-%\small
 \begin{center}
 \begin{tikzpicture}
 %
@@ -21,4 +19,3 @@
 %
 \end{tikzpicture}
 \end{center}
-%\end{slide}
