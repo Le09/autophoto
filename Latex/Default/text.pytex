@@ -1,0 +1,16 @@
+%%PAGE
+%%NORANDOM
+\newpage
+
+\vspace*{\fill}
+    \begin{minipage}{.48\textwidth}
+        \begin{figure}[H]
+            \begin{center}
+                \ffbox{\includegraphics[max width=.9\textwidth,max height=.85\textheight,keepaspectratio]{%!!9,9!!%}}
+            \end{center}
+        \end{figure}
+    \end{minipage}
+    \begin{minipage}{.48\textwidth}
+        %%!- {\normalsize %--%}
+    \end{minipage}
+\vspace*{\fill}
