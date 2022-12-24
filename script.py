@@ -297,7 +297,7 @@ class DocumentPage:
 
 def shellify_filepath(filepath):
     result = filepath.replace("\\", "\\\\")
-    for char in " !()'":
+    for char in " !()'`;":
         result = result.replace(char, "\\" + char)
     return result
 
