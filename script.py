@@ -8,6 +8,8 @@ import random
 import datetime
 import subprocess
 import argparse
+import constraint
+
 
 WARNINGS = []
 
@@ -39,50 +41,39 @@ def opposite(orientation):
     return "v" if orientation == "h" else "h" if orientation == "v" else "a"
 
 
-def weights(template_photos, im_orientations):
-    return {k: -im_orientations.count(k) + template_photos.count(k) for k in "hva"}
+def cost_reorder(target, input, order):
+    units = sum(abs(i - order[i]) ** 2 for i in range(len(order)))
+    hundreds = sum(10 * (0 if target[i] == input[order[i]] else 1) for i in range(len(order)))
+    return hundreds + units
 
 
-def weight(template_orientation, weights, im_o):
-    weight = 0
-    if template_orientation != im_o:
-        if template_orientation == "a":
-            weight = weights[im_o]
-        else:
-            if im_o != "a":
-                weight = 1000 #if im_o != "a" else 1
-            else:
-                weight = 1 if weights[opposite(template_orientation)] > 0 else 0
-    return weight
+def compatible_orientations(target, input):
+    result = len(target) == len(input)
+    for t, o in zip(target, input):
+        result &= (t == "a" or o == "a" or t == o)
+    return result
 
 
-def orientation_reorder(target, im_os, im_set):
-    """ Given the orientations of the template, reorder images to fit.
-    The signature is adapted to be more easily testable.
-    >>> orientation_reorder(["v", "h", "h"], ["h", "v", "h"], [0, 0, 0])[1]
-    ['v', 'h', 'h']
-    >>> orientation_reorder(["v", "h", "h"], ["a", "a", "v"], [0, 0, 0])[1]
-    ['v', 'a', 'a']
-    >>> orientation_reorder(["v", "h", "h"], ["a", "a", "h"], [0, 0, 0])[1]
-    ['a', 'a', 'h']
-    >>> orientation_reorder(["v", "h", "h"], ["v", "h", "h"], [0, 0, 0])[1]
-    ['v', 'h', 'h']
-    >>> orientation_reorder(["a", "a", "a"], ["v", "h", "a"], [0, 0, 0])[1]
-    ['v', 'h', 'a']
-    >>> orientation_reorder(["v", "h", "h", "a"], ["a", "h", "h", "v"], [0, 0, 0, 0])[1]
-    ['v', 'a', 'h', 'h']
-    """
-    new_order = []
-    new_orientations = []
-    for i in range(len(target)):
-        target_o = target[i]
-        target_tail = target[i + 1:]
-        weights_tail = weights(target_tail, im_os)
-        get_weight = lambda tu: weight(target_o, weights_tail, tu[1])
-        index_min = min(enumerate(im_os), key=get_weight)[0]
-        new_orientations.append(im_os.pop(index_min))
-        new_order.append(im_set.pop(index_min))
-    return new_order, new_orientations
+def get_reorientations(target, input):
+    problem = constraint.Problem()
+    indices = range(len(target))
+    domain = range(len(target))
+    problem.addVariables(indices, domain)
+    problem.addConstraint(constraint.AllDifferentConstraint())
+    for i, t in enumerate(target):
+        if t == "h":
+            problem.addConstraint(lambda i: input[i] != "v", [i])
+        if t == "v":
+            problem.addConstraint(lambda i: input[i] != "h", [i])
+    return problem.getSolutions()
+
+
+def orientation_reorder(target, input):
+    solutions = get_reorientations(target, input)
+    if not solutions:  # we are probably in lax mode, forced by manual template choice
+        solutions = [{i: i for i in range(len(target))}]  # we simply don't reorder
+    sol = min((s for s in solutions), key=lambda s: cost_reorder(target, input, s))
+    return [sol[i] for i in range(len(target))]
 
 
 class Template:
@@ -277,7 +268,11 @@ class DocumentPage:
 
         target = self.page_template.photos_in_page()
         im_os = image_orientations(self.im_set)
-        ordered_im_set = orientation_reorder(target, im_os, self.im_set[:])[0]
+        if not compatible_orientations(target, im_os):
+            new_order = orientation_reorder(target, im_os)
+            ordered_im_set = [self.im_set[i] for i in new_order]
+        else:
+            ordered_im_set = [im for im in self.im_set]
         for im in ordered_im_set:
             basename = self._image_name_simplified(im)
             filepath = os.path.join(self.page_folder, basename)
