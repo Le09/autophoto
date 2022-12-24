@@ -70,6 +70,8 @@ def orientation_reorder(target, im_os, im_set):
     ['v', 'h', 'h']
     >>> orientation_reorder(["a", "a", "a"], ["v", "h", "a"], [0, 0, 0])[1]
     ['v', 'h', 'a']
+    >>> orientation_reorder(["v", "h", "h", "a"], ["a", "h", "h", "v"], [0, 0, 0, 0])[1]
+    ['v', 'a', 'h', 'h']
     """
     new_order = []
     new_orientations = []
