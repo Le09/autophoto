@@ -18,7 +18,7 @@
 \begin{minipage}{.32\textwidth}
     \begin{figure}[H]
         \centering
-        \ffbox{\includegraphics[width=.8\textwidth,height=.3\textheight,keepaspectratio]{%!!9,16!!%}}
+        \ffbox{\includegraphics[width=.75\textwidth,height=\textheight,keepaspectratio]{%!!9,16!!%}}
         %%!- \caption*{%--%}
     \end{figure}
 \end{minipage}
