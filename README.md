@@ -7,7 +7,11 @@ Get a photo album from your holidays in an instant!
 ## Usage
 Put the photos you want to turn into an album into some folder FOLDER.
 
-Simply use ./script.py --folder FOLDER, and voilà! (for the full list, type ./script -h or ./script.py -l)
+pipx uninstall autophoto-woolion # if already installed
+python3 -m build
+pipx install ./dist/autophoto_woolion-0.0.1*.whl
+
+Otherwise use ./main.py --folder FOLDER, and voilà! (for the full list, type ./main -h or ./main.py -l)
 (Later: autophoto folder)
 A photo album is created into a newly created folder.
 Since the output is random, you can run the script multiple times.

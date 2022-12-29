@@ -513,7 +513,7 @@ def image_mosaic(images_partition, output_folder, vertical=True):
     return is_image(outputfile)
 
 
-def main(photo_folder, template_folder, filename):
+def make_album(photo_folder, template_folder, filename):
     output_folder = in_to_out_folder(photo_folder)
     create_folder(output_folder, ".")
 
@@ -573,13 +573,16 @@ def print_report(output_folder, warnings):
         print("***********************************************************")
 
 
-if __name__ == "__main__":
-    import pudb; pudb.set_trace()
+def main():
     args = main_arguments_parser().parse_args()
     template_folder = os.path.join(args.template_folder, args.template)
     try:
-        output_folder = main(args.folder, template_folder, args.name)
+        output_folder = make_album(args.folder, template_folder, args.name)
         print_report(output_folder, WARNINGS)
     except Exception as e:
         print(e)
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
