@@ -7,7 +7,7 @@ import re
 import random
 import datetime
 import subprocess
-import argparse
+import configargparse as argparse
 
 WARNINGS = []
 
@@ -545,7 +545,8 @@ def make_album(photo_folder, template_folder, filename):
 
 
 def main_arguments_parser():
-    parser = argparse.ArgumentParser(description='Photo folder path')
+    parser = argparse.ArgumentParser(description='Photo folder path', default_config_files=['.autophoto.rc','~/.autophoto.rc'])
+    parser.add('-c', '--config', is_config_file=True, help='config file path')
 
     parser.add_argument('--name', '-n', default="",
                         type=str, nargs='?', help='Output filename')
