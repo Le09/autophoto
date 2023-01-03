@@ -6,39 +6,39 @@
 \begin{minipage}{.32\textwidth}
     \begin{figure}[H]
         \centering
-        \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
+        \ffbox{\includegraphics[max width=.9\textwidth, max height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
         %%!- \caption*{%--%}
     \end{figure}
     \vspace{.001\textheight}
     \begin{figure}[H]
         \centering
-        \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
+        \ffbox{\includegraphics[max width=.9\textwidth, max height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
         %%!- \caption*{%--%}
     \end{figure}
 \end{minipage}
 \begin{minipage}{.32\textwidth}
     \begin{figure}[H]
         \centering
-        \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
+        \ffbox{\includegraphics[max width=.9\textwidth, max height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
         %%!- \caption*{%--%}
     \end{figure}
     \vspace{.001\textheight}
     \begin{figure}[H]
         \centering
-        \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
+        \ffbox{\includegraphics[max width=.9\textwidth, max height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
         %%!- \caption*{%--%}
     \end{figure}
 \end{minipage}
 \begin{minipage}{.32\textwidth}
     \begin{figure}[H]
         \centering
-        \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
+        \ffbox{\includegraphics[max width=.9\textwidth, max height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
         %%!- \caption*{%--%}
     \end{figure}
     \vspace{.001\textheight}
     \begin{figure}[H]
         \centering
-        \ffbox{\includegraphics[width=.9\textwidth,height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
+        \ffbox{\includegraphics[max width=.9\textwidth, max height=.3\textheight,keepaspectratio]{%!!16,9!!%}}
         %%!- \caption*{%--%}
     \end{figure}
 \end{minipage}
