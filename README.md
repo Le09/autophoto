@@ -8,11 +8,15 @@ Get a photo album from your holidays in an instant!
 Put the photos you want to turn into an album into some folder FOLDER.
 
 pipx uninstall autophoto-woolion # if already installed
-python3 -m build
+python3 -m build # to create the tar.gz
 pipx install ./dist/autophoto_woolion-0.0.1*.whl
 
-Otherwise use ./main.py --folder FOLDER, and voilà! (for the full list, type ./main -h or ./main.py -l)
-(Later: autophoto folder)
+Installation with pip (test in a separate virtual environment): 
+pip install autophoto_woolion-0.0.1.tar.gz
+
+autophoto -f FOLDER 
+(or ./main.py -f FOLDER)
+
 A photo album is created into a newly created folder.
 Since the output is random, you can run the script multiple times.
 
@@ -34,3 +38,6 @@ Latex, Python3
 - [ ] Incomplete tasks
     - [x] Adapt the script to work allow to specify if the image holders are vertical or horizontal
     - [ ] (?) Linux installation script
+    - [ ] Config file .autophoto.rc
+    - [ ] Latex templates (non-python files) to be copied with pip install tar.gz (MANIFEST.in, include_package_data=True in setup.py)
+    - [ ] autophoto -f FOLDER should work (Latex templates should be found)

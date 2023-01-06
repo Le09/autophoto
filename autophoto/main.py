@@ -11,6 +11,7 @@ import configargparse as argparse
 
 WARNINGS = []
 
+MAIN_FILE = __file__
 DEFAULT_TEMPLATE_FOLDER = './Latex'
 DEFAULT_TEMPLATE = 'Default'
 DEFAULT_MAIN_NAME = 'main.pytex'
@@ -543,8 +544,14 @@ def make_album(photo_folder, template_folder, filename):
         subprocess.check_call(['mv', 'main.pdf', filename])
     return output_folder
 
+def get_path(filename):
+    """Return file's path or empty string if no path."""
+    head, tail = os.path.split(filename)
+    return head
+
 
 def main_arguments_parser():
+    default_template_folder = os.path.join(get_path(MAIN_FILE), 'Latex')
     parser = argparse.ArgumentParser(description='Photo folder path', default_config_files=['.autophoto.rc','~/.autophoto.rc'])
     parser.add('-c', '--config', is_config_file=True, help='config file path')
 
@@ -555,7 +562,7 @@ def main_arguments_parser():
 
     parser.add_argument('--folder', '-f', default="./Photos",
                         type=str, nargs='?', help='Input photo folder')
-    parser.add_argument('--template_folder', '-F', default=DEFAULT_TEMPLATE_FOLDER,
+    parser.add_argument('--template_folder', '-F', default=default_template_folder,
                         type=str, nargs='?', help='Input template folder')
     parser.add_argument('--template', '-t', default=DEFAULT_TEMPLATE,
                         type=str, nargs='?', help='Input template folder')
