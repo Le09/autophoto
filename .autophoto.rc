@@ -1,0 +1,6 @@
+# basic settings
+
+name = myAlbum.pdf
+album_name = My Album
+# folder = ~/Photos  # os.path.expanduser() might be necessary
+
