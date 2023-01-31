@@ -560,7 +560,7 @@ def main_arguments_parser():
     parser.add_argument('--album_name', '-a', default="Album",
                         type=str, nargs='?', help='Album title (used on the cover)')
 
-    parser.add_argument('--folder', '-f', default="./Photos",
+    parser.add_argument('folder', default="./Photos",
                         type=str, nargs='?', help='Input photo folder')
     parser.add_argument('--template_folder', '-F', default=default_template_folder,
                         type=str, nargs='?', help='Input template folder')
