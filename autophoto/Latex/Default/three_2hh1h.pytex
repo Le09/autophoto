@@ -6,16 +6,16 @@
 \begin{tikzpicture}
 %
 \node[fill=white](p1) at (.05\textwidth,.05\textwidth)% for absolute cordinates, if any
- {\resizebox{.3\textwidth}{!}{\includegraphics[keepaspectratio]{%!!16,9!!%}}};
+ {\includegraphics[max width=.40\textwidth, max height=.40\textheight, keepaspectratio]{%!!16,9!!%}};
 %%!-\node[below=.01\textheight,text=black,align=center] at (p1.south) {%--%};
 %
 \node[right,fill=white](p2) at ($(p1.east)+(.2\textheight,0in)$)
- {{\resizebox{.3\textwidth}{!}{\includegraphics[keepaspectratio]{%!!16,9!!%}}}};
+ {\includegraphics[max width=.40\textwidth, max height=.40\textheight, keepaspectratio]{%!!16,9!!%}};
 %%!-\node[below=.01\textheight,text=black,align=center] at (p2.south) {%--%};
 %
 \node[right,fill=white](p3) at ($(p1.west)+(.4\textheight,-.5\textheight)$)
- {{\resizebox{.3\textwidth}{!}{\includegraphics[keepaspectratio]{%!!16,9!!%}}}};
-%%!-\node[rotate=90,below=.01\textheight,text=black,align=center] at (p3.east) {%--%};
+ {\includegraphics[max height=.40\textheight, keepaspectratio]{%!!16,9!!%}};
+%%!-\node[below=.01\textheight,text=black,align=center] at (p3.south) {%--%};
 %
 \end{tikzpicture}
 \end{center}

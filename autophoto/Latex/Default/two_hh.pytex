@@ -5,12 +5,12 @@
 \begin{tikzpicture}
 %
 \node[fill=white](p1) at (0,0)% for absolute cordinates, if any
- {\includegraphics[max height=.44\textheight,max width=\textwidth,keepaspectratio]{%!!16,9!!%}};
+ {\includegraphics[max height=.40\textheight,max width=.9\textwidth,keepaspectratio]{%!!16,9!!%}};
 %%!-\node[above=.01\textheight,text=black,align=center] at (p1.north) {%--%};
 \vspace{.1\textheight}
 %
 \node[below, fill=white](p2) at ($(p1.south)+(0,-.01\textheight)$)
- {\includegraphics[max height=.44\textheight,max width=\textwidth,keepaspectratio]{%!!16,9!!%}};
+ {\includegraphics[max height=.40\textheight,max width=.9\textwidth,keepaspectratio]{%!!16,9!!%}};
 %%!-\node[below=.01\textheight,text=black,align=center] at (p2.south) {%--%};
 %
 \end{tikzpicture}
