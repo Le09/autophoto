@@ -358,6 +358,7 @@ def load_files_in_folder(root_folder, file_predicate):
 def load_photos_in_folder(folder):
     return load_files_in_folder(folder, is_image)
 
+
 FOLDER_OPTIONS = ['name', 'template_or_resegment']  # first is numbering
 FILE_OPTIONS = ['name']
 
@@ -434,19 +435,10 @@ def create_folder(name, destination):
     os.makedirs(folder_path)
     return folder_path
 
-def segment_partition(im_list_list, page_templates, force_resegment=False):
-    new_partition = []
-    max_size = max(t.photos_in_page() for t in page_templates)
-    for im_list in im_list_list:
-        if force_resegment or len(im_list) > max_size:
-            new_partition += segment(im_list, page_templates)
-        else:
-            new_partition.append(im_list)
-    return new_partition
 
 def segment(im_list, page_templates):
-    # transform a set into a list of subsets [s_1, ..., s_k] forming a partition
-    # we should for every s_i, |s_i| = r, \exists t \in page_templates s.t. holes(t) = r
+    """Transform a set into a list of subsets [s_1, ..., s_k] forming a partition
+    we should for every s_i, |s_i| = r, \exists t \in page_templates s.t. holes(t) = r"""
     all_sizes = random_sizes(page_templates)
     partition = []
     while im_list:
@@ -543,6 +535,7 @@ def make_album(photo_folder, template_folder, filename):
     if filename:
         subprocess.check_call(['mv', 'main.pdf', filename])
     return output_folder
+
 
 def get_path(filename):
     """Return file's path or empty string if no path."""
