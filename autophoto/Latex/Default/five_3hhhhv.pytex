@@ -31,7 +31,7 @@
 \begin{minipage}{.32\textwidth}
     \begin{figure}[H]
         \centering
-        \ffbox{\includegraphics[max width=.75\textwidth, max height=\textheight,keepaspectratio]{%!!9,16!!%}}
+        \ffbox{\includegraphics[max width=.75\textwidth, max height=.9\textheight,keepaspectratio]{%!!9,16!!%}}
         %%!- \caption*{%--%}
     \end{figure}
 \end{minipage}
