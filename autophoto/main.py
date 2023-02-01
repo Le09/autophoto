@@ -382,8 +382,12 @@ def parse_options_file(name):
     return parse_options_parametrised(name, FILE_OPTIONS)
 
 
+def random_sizes(page_templates):
+    return [t.photos_in_page() for t in page_templates if t.random]
+
+
 def load_content(root_folder, page_templates):
-    sizes = [t.photos_in_page() for t in page_templates]
+    sizes = random_sizes(page_templates)
     list_content = []
     page_options = []
     for folder in sorted(f for f in os.listdir(root_folder) if os.path.isdir(os.path.join(root_folder, f))):
@@ -408,7 +412,8 @@ def load_content(root_folder, page_templates):
                     page_options += [{}] * len(segmented)
         elif len_imgs < len_template:  # ignore the template, it's wrong
             list_content += segment(im_list, page_templates)
-        elif not any(sets_compatible(image_orientations(im_list), size) for size in sizes) or options.get('resegment'):
+        # we haven't forced a template and nothing is compatible, or forced resegment
+        elif (not len_template and not any(sets_compatible(image_orientations(im_list), size) for size in sizes)) or options.get('resegment'):
             segmented = segment(im_list, page_templates)
             list_content += segmented
             page_options += [options] * len(segmented)
@@ -442,7 +447,7 @@ def segment_partition(im_list_list, page_templates, force_resegment=False):
 def segment(im_list, page_templates):
     # transform a set into a list of subsets [s_1, ..., s_k] forming a partition
     # we should for every s_i, |s_i| = r, \exists t \in page_templates s.t. holes(t) = r
-    all_sizes = [t.photos_in_page() for t in page_templates]
+    all_sizes = random_sizes(page_templates)
     partition = []
     while im_list:
         possible_sizes = all_sizes[:]
