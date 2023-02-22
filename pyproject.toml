@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "autophoto_woolion"
+name = "autophoto"
 version = "0.0.1"
 authors = [
   { name="Woolion", email="wooliondrawz@gmail.com" },
