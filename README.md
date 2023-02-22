@@ -68,4 +68,5 @@ List all Pytex holes and how to use them, and 'no random' option.
   - [ ] Explain how to work with templates
   - [ ] Explain template selection CLI option
   - [ ] Explain image resizing CLI option
+- [ ] Image resizing depends on ImageMagick; make it optional, detail option
 - [ ] publish on PyPI 
