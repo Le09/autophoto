@@ -16,7 +16,7 @@ setuptools.setup(
     description="LaTeX photo album generator",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    install_requires=["ConfigArgParse>=1.5.3", "requests>=2.28.1", "beautifulsoup4==4.11.1"],
+    install_requires=["ConfigArgParse>=1.5.3", "python-constraint>=1.4.0"],
     url=url,
     license="LGPLv3+",
     project_urls={"Bug Tracker": f"{url}/issues"},
